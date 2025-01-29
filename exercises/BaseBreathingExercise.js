@@ -48,6 +48,10 @@ export class BaseBreathingExercise {
 
         // Audio system
         this.audioManager = new AudioManager();
+
+        // Add background transition properties
+        this.introBackgroundColor = new THREE.Color(this.exerciseConfig.introBackground);
+        this.finalBackgroundColor = new THREE.Color(0x000000); // Final color (black)
     }
 
     /**
@@ -293,14 +297,23 @@ export class BaseBreathingExercise {
     }
 
     handleIntroAnimation(timestamp) {
-        this.scale = 1 + 0.1 * Math.sin((performance.now() - this.introStartTime) / 500);
+        // Keep shape at constant scale during intro
+        this.scale = 1;
         this.shape.scale.set(this.scale, this.scale, this.scale);
+        
+        // Calculate progress of intro animation (0 to 1)
+        const progress = Math.min(1, (timestamp - this.introStartTime) / this.introDuration);
+        
+        // Interpolate background color
+        const currentColor = new THREE.Color();
+        currentColor.lerpColors(this.introBackgroundColor, this.finalBackgroundColor, progress);
+        this.scene.background = currentColor;
         
         if (timestamp - this.introStartTime >= this.introDuration) {
             this.isIntro = false;
             this.cycleStage = 0;
             this.lastTime = timestamp;
-            this.startTime = Date.now();  // Initialiser startTime quand l'intro est terminée
+            this.startTime = Date.now();
             this.updateInstruction();
             if (this.counterElement) {
                 this.counterElement.style.display = "block";

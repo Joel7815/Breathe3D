@@ -24,6 +24,13 @@ export const CONFIG = {
     sleepBreathing: 0xF5E3B3,     // Ivory Yellow
   },
   
+  // Add intro background colors
+  introBackgrounds: {
+    squareBreathing: 0x1F2937,    // Deep blue night (complements lavender)
+    balancedBreathing: 0x2D2A2E,  // Warm dark grey (complements peach)
+    sleepBreathing: 0x242D3B,     // Navy blue (complements ivory)
+  },
+  
   // Exercise-specific configuration
   shapes: {
     squareBreathing: {
@@ -48,6 +55,7 @@ export function getExerciseConfig(exerciseName) {
         color: CONFIG.colors[exerciseName],
         phases: CONFIG.shapes[exerciseName].phases,
         defaultCounter: CONFIG.shapes[exerciseName].defaultCounter,
+        introBackground: CONFIG.introBackgrounds[exerciseName],
     };
 }
 

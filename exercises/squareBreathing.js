@@ -12,7 +12,7 @@ class SquareBreathing extends BaseBreathingExercise {
     reset() {
         this.isIntro = true;
         this.introStartTime = performance.now();
-        this.counter = this.exerciseConfig.defaultCounter;
+        this.counter = 1;
         this.phaseDuration = this.exerciseConfig.defaultCounter * 1000; // Convert to milliseconds
         this.phaseStartTime = performance.now();
         this.scale = CONFIG.scale.min;
@@ -60,7 +60,15 @@ class SquareBreathing extends BaseBreathingExercise {
 
     // Handle shape scaling animation based on breathing phase
     adjustShapeScale() {
-        const scaleStep = (this.exerciseConfig.maxScale - CONFIG.scale.min) / (this.phaseDuration / 16); // Ajuster la vitesse de changement d'échelle
+        // Skip scale adjustment during intro
+        if (this.isIntro) {
+            const fixedScale = 1;
+            this.scale = fixedScale;
+            this.shape.scale.set(fixedScale, fixedScale, fixedScale);
+            return;
+        }
+
+        const scaleStep = (this.exerciseConfig.maxScale - CONFIG.scale.min) / (this.phaseDuration / 16);
 
         if (this.cycleStage === 0) { // Inhale phase
             this.scale += scaleStep;
@@ -84,21 +92,24 @@ class SquareBreathing extends BaseBreathingExercise {
             this.counterElement.style.display = "none";
             return;
         }
-
+        
         const currentTime = performance.now();
         const elapsedTime = currentTime - this.phaseStartTime;
         const progress = elapsedTime / this.phaseDuration;
-        let count;
-
-        // Count up for inhale and hold phases, count down for exhale
-        if (this.cycleStage === 0 || this.cycleStage === 1 || this.cycleStage === 3) {
-            count = Math.floor(1 + (progress * 4));
+        
+        // Count up for inhale and first hold phases
+        // Count down for exhale and second hold phases
+        if (this.cycleStage === 0 || this.cycleStage === 1) {
+            this.counter = Math.max(1, Math.floor(1 + (progress * 4)));
         } else {
-            count = Math.ceil(4 - (progress * 4));
+            this.counter = Math.ceil(4 - (progress * 4));
         }
-
+        
+        // Ensure counter stays within bounds
+        this.counter = Math.min(Math.max(this.counter, 1), 4);
+        
         this.counterElement.style.display = "block";
-        this.counterElement.innerText = Math.min(Math.max(count, 1), 4);
+        this.counterElement.innerText = this.counter;
     }
 
     // Initialize exercise and UI elements
@@ -128,8 +139,7 @@ class SquareBreathing extends BaseBreathingExercise {
 
     // Handle the introduction animation sequence
     handleIntroAnimation(timestamp) {
-        this.scale = 1 + 0.1 * Math.sin((performance.now() - this.introStartTime) / 500);
-        this.shape.scale.set(this.scale, this.scale, this.scale);
+        super.handleIntroAnimation(timestamp);
         
         const introHalfDuration = this.introDuration / 2;
         if (timestamp - this.introStartTime >= introHalfDuration) {
@@ -140,11 +150,13 @@ class SquareBreathing extends BaseBreathingExercise {
             this.isIntro = false;
             this.cycleStage = 0;
             this.phaseStartTime = performance.now();
+            this.counter = 1;
             this.scale = CONFIG.scale.min;
             this.shape.scale.set(this.scale, this.scale, this.scale);
             this.updateInstruction();
             if (this.counterElement) {
                 this.counterElement.style.display = "block";
+                this.counterElement.innerText = this.counter;
             }
         }
     }
