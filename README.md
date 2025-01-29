@@ -1,8 +1,6 @@
-# Breathe3D
+# Ruha
 
-![Capture](https://github.com/user-attachments/assets/d6bbd9fd-0d74-4f7d-a28b-893420bafb64)
-
-
+![Capture](https://github.com/user-attachments/assets/e66bb19b-709e-4517-bb37-d30bf367b15d)
 
 
 Une application web interactive de respiration guidée utilisant des visualisations 3D pour aider à la relaxation et à la méditation.
