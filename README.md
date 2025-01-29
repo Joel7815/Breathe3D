@@ -72,4 +72,4 @@ Les contributions sont les bienvenues ! N'hésitez pas à :
 Joël Huck - projet réalisé dans le cadre du cours Réalité virtuelle et augmentée de l'UNIL. Cours donné par Isaac Pante : https://isaacpante.net/
 
 
-Application disponible en ligne / App available online : (https://oufouf47.itch.io/ruha)
+Application disponible en ligne / App available online : https://oufouf47.itch.io/ruha
