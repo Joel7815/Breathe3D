@@ -7,7 +7,7 @@ Une application web interactive de respiration guidée utilisant des visualisati
 
 ## Description
 
-Breathe 3D est une application web qui propose trois exercices de respiration différents, chacun accompagné d'une visualisation 3D interactive et de sons d'ambiance apaisants. L'application a été conçue pour aider les utilisateurs à :
+Ruha est une application web qui propose trois exercices de respiration différents, chacun accompagné d'une visualisation 3D interactive et de sons d'ambiance apaisants. L'application a été conçue pour aider les utilisateurs à :
 
 - Gérer leur stress et leur anxiété
 - Améliorer leur concentration
