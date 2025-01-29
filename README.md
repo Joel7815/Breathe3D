@@ -1,5 +1,10 @@
 # Breathe3D
 
+![Capture](https://github.com/user-attachments/assets/d6bbd9fd-0d74-4f7d-a28b-893420bafb64)
+
+
+
+
 Une application web interactive de respiration guidée utilisant des visualisations 3D pour aider à la relaxation et à la méditation.
 
 ## Description
